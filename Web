@@ -1,0 +1,21 @@
+# create folder and enter
+mkdir html
+cd html
+
+# create html file
+echo "<html><body><h1>Hello from Docker</h1></body></html>" > index.html
+
+# create Dockerfile
+cat <<EOF > Dockerfile
+FROM httpd
+COPY . /usr/local/apache2/htdocs/
+EOF
+
+# build docker image
+sudo docker build -t index .
+
+# run docker container
+sudo docker run -d -p 8080:80 index
+
+# test output
+curl http://localhost:8080
